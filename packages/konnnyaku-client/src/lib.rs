@@ -3,6 +3,9 @@ use konnnyaku_common::response::Response;
 use std::io::{Read, Write};
 use std::net::TcpStream;
 use std::str;
+use crate::url::Url;
+
+mod url;
 
 pub struct Client {}
 
@@ -12,14 +15,15 @@ impl Client {
     }
 
     pub fn get(url: String) {
-        let request = Request::build(String::from("/ping"), RequestMethod::GET);
+        let url = Url::new(&url);
+        let request = Request::build(url.pathname, RequestMethod::GET);
         let request = request.print();
-        let mut stream = Client::connect(String::from("127.0.0.1:3000"));
+        let mut stream = Client::connect(url.host);
         stream.write(request.as_bytes());
         let mut buffer = [0; 2048];
         let nbytes = stream.read(&mut buffer).unwrap();
         let http = str::from_utf8(&buffer).unwrap();
-        println!("http: {}", http);
+        println!("{}", http);
     }
 
     fn connect(host: String) -> TcpStream {

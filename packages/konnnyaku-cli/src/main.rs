@@ -1,6 +1,7 @@
 use konnnyaku_client::Client;
 
 fn main() {
-    let client = Client::build();
-    Client::get(String::from("asdf"));
+    let args: Vec<String> = std::env::args().collect();
+    let input = &args[1];
+    Client::get(input.to_string());
 }
