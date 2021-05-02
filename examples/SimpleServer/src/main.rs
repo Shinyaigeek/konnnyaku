@@ -1,7 +1,6 @@
-use konnnyaku_server::server::server::{Server};
+use konnnyaku_server::server::server::Server;
 
 fn main() {
-    let server = Server {};
-    Server::echo();
+    let server = Server::build(3000);
     println!("Hello, world!");
 }

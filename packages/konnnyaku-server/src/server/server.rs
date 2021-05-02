@@ -1,9 +1,11 @@
 pub struct Server {
-
+    port: i32
 }
 
 impl Server {
-    pub fn echo() {
-        println!("jey");
+    pub fn build(port: i32) -> Self {
+        Self {
+            port
+        }
     }
 }
