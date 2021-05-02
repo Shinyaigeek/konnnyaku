@@ -18,6 +18,7 @@ impl Server {
             let mut stream = stream.unwrap();
             println!("Connection from {}", stream.peer_addr().unwrap());
             let request = Request::parse_stream_to_request(&mut stream);
+            request.print();
         }
     }
 }
