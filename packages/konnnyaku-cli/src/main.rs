@@ -1,3 +1,6 @@
+use konnnyaku_client::Client;
+
 fn main() {
-    println!("hello");
+    let client = Client::build();
+    Client::get(String::from("asdf"));
 }

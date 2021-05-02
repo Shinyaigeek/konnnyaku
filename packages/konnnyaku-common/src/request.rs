@@ -6,7 +6,7 @@ struct RequestHeader {}
 
 const GET: &str = "GET";
 
-enum RequestMethod {
+pub enum RequestMethod {
     GET,
 }
 
@@ -21,10 +21,7 @@ impl Request {
         let mut buffer = [0; 2048];
         loop {
             let nbytes = stream.read(&mut buffer).unwrap();
-            println!("bytes:{:?}", buffer);
             let http = str::from_utf8(&buffer).unwrap();
-            println!("http : {:?}", http);
-            println!("----------");
             let mut idx = 0;
             let method = parse_method(&mut idx, &buffer);
             let url = parse_url(&mut idx, &buffer);
@@ -39,13 +36,25 @@ impl Request {
         }
     }
 
-    pub fn print(&self) {
+    pub fn build(url: String, method: RequestMethod) -> Self {
+        Self {
+            url,
+            method,
+            header: RequestHeader {},
+        }
+    }
+
+    pub fn print(&self) -> String {
         let method = match self.method {
             RequestMethod::GET => "GET",
         };
         let url = &self.url;
-        println!("HTTP Request Method: {}", method);
-        println!("HTTP Request URL: {}", url);
+        String::from(format!(
+            "{} {} HTTP/1.1
+User-Agent: konnnyaku
+Accept: *",
+            method, url
+        ))
     }
 }
 
