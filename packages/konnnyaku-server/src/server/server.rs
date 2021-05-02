@@ -1,4 +1,5 @@
 use konnnyaku_common::request::Request;
+use konnnyaku_common::response::Response;
 use std::io::Write;
 use std::net::TcpListener;
 
@@ -19,6 +20,10 @@ impl Server {
             println!("Connection from {}", stream.peer_addr().unwrap());
             let request = Request::parse_stream_to_request(&mut stream);
             request.print();
+            let response = Response::build().print();
+            let response = response.as_bytes();
+            stream.write(response);
+            stream.flush();
         }
     }
 }

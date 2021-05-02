@@ -18,7 +18,7 @@ pub struct Request {
 
 impl Request {
     pub fn parse_stream_to_request(stream: &mut TcpStream) -> Self {
-        let mut buffer = [0; 1024];
+        let mut buffer = [0; 2048];
         loop {
             let nbytes = stream.read(&mut buffer).unwrap();
             println!("bytes:{:?}", buffer);
