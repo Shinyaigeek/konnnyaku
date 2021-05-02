@@ -12,7 +12,7 @@ enum RequestMethod {
 
 pub struct Request {
     method: RequestMethod,
-    url: String,
+    pub url: String,
     header: RequestHeader,
 }
 
