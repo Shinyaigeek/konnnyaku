@@ -28,9 +28,7 @@ impl Server {
     pub fn serve(&self) {
         for stream in self.listener.incoming() {
             let mut stream = stream.unwrap();
-            println!("Connection from {}", stream.peer_addr().unwrap());
             let request = Request::parse_stream_to_request(&mut stream);
-            request.print();
             let mut response = Response::build();
             let callback_handler = self.handlers.get(&request.url).unwrap();
             callback_handler(request, &mut response);

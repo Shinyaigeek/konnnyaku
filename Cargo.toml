@@ -1,6 +1,10 @@
 [workspace]
 members = [
     "packages/konnnyaku-server",
+    "packages/konnnyaku-client",
+    "packages/konnnyaku-common",
+    "packages/konnnyaku-cli",
+
 
   # Examples
   "examples/SimpleServer",
