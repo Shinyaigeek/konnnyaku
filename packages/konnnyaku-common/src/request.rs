@@ -13,6 +13,7 @@ pub enum RequestMethod {
 pub struct Request {
     method: RequestMethod,
     pub url: String,
+    pub host: String,
     header: RequestHeader,
 }
 
@@ -32,15 +33,18 @@ impl Request {
                 method,
                 url,
                 header: RequestHeader {},
+                // TODO 
+                host: String::from("")
             };
         }
     }
 
-    pub fn build(url: String, method: RequestMethod) -> Self {
+    pub fn build(url: String, method: RequestMethod, host: String) -> Self {
         Self {
             url,
             method,
             header: RequestHeader {},
+            host
         }
     }
 
@@ -50,10 +54,13 @@ impl Request {
         };
         let url = &self.url;
         String::from(format!(
-            "{} {} HTTP/1.1
-User-Agent: konnnyaku
-Accept: *",
-            method, url
+            "{} {} HTTP/1.0\r
+Host: {}\r
+User-Agent: curl/7.54.0\r
+Accept: */*\r
+\r
+",
+            method, url, self.host
         ))
     }
 }
