@@ -28,6 +28,7 @@ impl Client {
     }
 
     fn connect(host: String) -> TcpStream {
+        // tls
         let stream = TcpStream::connect(format!("{}:80", host));
         let stream = stream.unwrap();
         return stream;
