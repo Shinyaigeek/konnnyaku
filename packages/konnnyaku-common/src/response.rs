@@ -1,6 +1,6 @@
+use std::io::Read;
+use std::net::TcpStream;
 use std::str;
-use std::net::{TcpStream};
-use std::io::{Read};
 
 pub struct Response {
     version: HTTPVersion,
@@ -60,7 +60,11 @@ impl Response {
 
         let header = -1;
 
-        while *&buffer[idx] != b'\r' || *&buffer[idx + 1] != b'\n' || *&buffer[idx + 2] != b'\r' || *&buffer[idx + 3] != b'\n' {
+        while *&buffer[idx] != b'\r'
+            || *&buffer[idx + 1] != b'\n'
+            || *&buffer[idx + 2] != b'\r'
+            || *&buffer[idx + 3] != b'\n'
+        {
             idx += 1;
         }
 
@@ -102,7 +106,7 @@ const one_zero: &str = "HTTP/1.0";
 
 enum HTTPVersion {
     one_one,
-    one_zero
+    one_zero,
 }
 
 fn match_status(status_code: u32) -> String {
