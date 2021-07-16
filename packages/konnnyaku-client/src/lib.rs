@@ -14,7 +14,7 @@ impl Client {
         return Self {};
     }
 
-    pub fn get(url: String) {
+    pub fn get(url: String) -> Response {
         let url = Url::new(&url);
         let request = Request::build(url.pathname, RequestMethod::GET, url.host);
         let host = request.host.clone();
@@ -24,7 +24,7 @@ impl Client {
         stream.write(request);
         stream.write(&[0]);
         let response = Response::parse_stream_to_response(&mut stream);
-        println!("{}", response.print());
+        response
     }
 
     fn connect(host: String) -> TcpStream {
@@ -32,5 +32,16 @@ impl Client {
         let stream = TcpStream::connect(format!("{}:80", host));
         let stream = stream.unwrap();
         return stream;
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        let response = Client::get("http://example.com/".to_string());
+        assert_eq!(response.status_code, 200);
     }
 }

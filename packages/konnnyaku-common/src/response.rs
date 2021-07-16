@@ -47,7 +47,7 @@ impl Response {
         let status_code = match &status_code[..] {
             "200" => 200,
             "404" => 404,
-            _ => panic!(""),
+            _ => panic!("status code got {:?}", status_code),
         };
 
         let mut status = String::from("");
