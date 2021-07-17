@@ -15,7 +15,7 @@ impl Client {
     }
 
     pub fn get(url: String) -> Response {
-        let url = Url::new(&url);
+        let url = Url::new(&Self::validate_url(url));
         let request = Request::build(url.pathname, RequestMethod::GET, url.host);
         let host = request.host.clone();
         let request = request.print();
@@ -33,6 +33,16 @@ impl Client {
         let stream = stream.unwrap();
         return stream;
     }
+
+    fn validate_url(url: String) -> String {
+        if (url.ends_with("/")) {
+            url
+        } else {
+            let mut url = url.clone();
+            url.push('/');
+            url
+        }
+    }
 }
 
 #[cfg(test)]
@@ -42,6 +52,12 @@ mod tests {
     #[test]
     fn it_works() {
         let response = Client::get("http://example.com/".to_string());
+        assert_eq!(response.status_code, 200);
+    }
+
+    #[test]
+    fn it_works_with_url_not_ending_with_slash() {
+        let response = Client::get("http://example.com".to_string());
         assert_eq!(response.status_code, 200);
     }
 }
