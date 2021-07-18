@@ -1,4 +1,4 @@
-use crate::url::Url;
+use crate::url::{Protocol, Url};
 use konnnyaku_common::request::{Request, RequestMethod};
 use konnnyaku_common::response::Response;
 use std::io::{Read, Write};
@@ -16,10 +16,10 @@ impl Client {
 
     pub fn get(url: String) -> Response {
         let url = Url::new(&Self::validate_url(url));
-        let request = Request::build(url.pathname, RequestMethod::GET, url.host);
+        let request = Request::build(url.pathname.clone(), RequestMethod::GET, url.host.clone());
         let host = request.host.clone();
         let request = request.print();
-        let mut stream = Client::connect(host);
+        let mut stream = Client::connect(url);
         let request = request.as_bytes();
         stream.write(request);
         stream.write(&[0]);
@@ -27,11 +27,21 @@ impl Client {
         response
     }
 
-    fn connect(host: String) -> TcpStream {
+    fn connect(url: Url) -> TcpStream {
         // tls
-        let stream = TcpStream::connect(format!("{}:80", host));
+        let stream = TcpStream::connect(Self::make_connection_port(url));
         let stream = stream.unwrap();
         return stream;
+    }
+
+    fn make_connection_port(url: Url) -> String {
+        let port = match url.protocol {
+            Protocol::http => "80",
+            Protocol::https => "443",
+            _ => panic!("unsupported protocol {:?}", url.protocol),
+        };
+
+        format!("{}:{}", url.host, port)
     }
 
     fn validate_url(url: String) -> String {
