@@ -58,8 +58,6 @@ impl Response {
 
         idx += 1;
 
-        let header = -1;
-
         while *&buffer[idx] != b'\r'
             || *&buffer[idx + 1] != b'\n'
             || *&buffer[idx + 2] != b'\r'

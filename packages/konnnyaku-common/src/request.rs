@@ -1,4 +1,4 @@
-use std::io::{Read, Write};
+use std::io::Read;
 use std::net::TcpStream;
 use std::str;
 
@@ -125,7 +125,6 @@ fn parse_url(_idx: &mut usize, buffer: &[u8]) -> String {
         idx += 1;
     }
 
-    let g = String::from("GET");
     *_idx = idx + 1;
 
     return url;
