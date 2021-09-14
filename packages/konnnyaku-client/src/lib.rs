@@ -45,7 +45,7 @@ impl Client {
     }
 
     fn validate_url(url: String) -> String {
-        if (url.ends_with("/")) {
+        if url.ends_with("/") {
             url
         } else {
             let mut url = url.clone();

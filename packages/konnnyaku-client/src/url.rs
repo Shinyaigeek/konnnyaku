@@ -21,7 +21,7 @@ impl Url {
 
         let protocol = match &protocol[..] {
             "http:" => Protocol::http,
-            _ => panic!(format!("{}", protocol)),
+            _ => panic!("{}", protocol),
         };
 
         let mut host = String::from("");
