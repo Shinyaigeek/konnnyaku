@@ -5,7 +5,7 @@ use std::io::Write;
 use std::net::TcpListener;
 
 pub struct Server {
-    port: i32,
+    pub port: i32,
     listener: TcpListener,
     handlers: HashMap<String, fn(Request, &mut Response)>,
 }
