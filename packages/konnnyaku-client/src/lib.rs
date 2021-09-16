@@ -1,9 +1,8 @@
 use crate::url::{Protocol, Url};
 use konnnyaku_common::request::{Request, RequestMethod};
 use konnnyaku_common::response::Response;
-use std::io::{Read, Write};
+use std::io::Write;
 use std::net::TcpStream;
-use std::str;
 
 mod url;
 
@@ -38,7 +37,6 @@ impl Client {
         let port = match url.protocol {
             Protocol::Http => "80",
             Protocol::Https => "443",
-            _ => panic!("unsupported protocol {:?}", url.protocol),
         };
 
         format!("{}:{}", url.host, port)
