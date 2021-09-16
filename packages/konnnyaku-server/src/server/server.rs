@@ -34,8 +34,8 @@ impl Server {
             callback_handler(request, &mut response);
             let response = response.print();
             let response = response.as_bytes();
-            stream.write(response);
-            stream.flush();
+            stream.write(response).unwrap();
+            stream.flush().unwrap();
         }
     }
 }

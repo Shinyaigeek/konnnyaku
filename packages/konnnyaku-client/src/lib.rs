@@ -20,8 +20,8 @@ impl Client {
         let request = request.print();
         let mut stream = Client::connect(url);
         let request = request.as_bytes();
-        stream.write(request);
-        stream.write(&[0]);
+        stream.write(request).unwrap();
+        stream.write(&[0]).unwrap();
         let response = Response::parse_stream_to_response(&mut stream);
         response
     }
