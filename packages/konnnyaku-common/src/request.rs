@@ -2,7 +2,7 @@ use std::io::Read;
 use std::net::TcpStream;
 use std::str;
 
-struct RequestHeader {}
+pub struct RequestHeader {}
 
 const GET: &str = "GET";
 const POST: &str = "POST";
@@ -30,7 +30,7 @@ pub struct Request {
     method: RequestMethod,
     pub url: String,
     pub host: String,
-    header: RequestHeader,
+    pub header: RequestHeader,
 }
 
 impl Request {
