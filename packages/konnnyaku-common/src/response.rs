@@ -19,7 +19,7 @@ impl Response {
 
     pub fn parse_stream_to_response(stream: &mut TcpStream) -> Self {
         let mut buffer = Vec::new();
-        let nbytes = stream.read_to_end(&mut buffer).unwrap();
+        stream.read_to_end(&mut buffer).unwrap();
 
         let mut idx = 0;
 

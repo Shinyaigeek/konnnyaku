@@ -38,7 +38,6 @@ impl Request {
         let mut buffer = [0; 2048];
         loop {
             let nbytes = stream.read(&mut buffer).unwrap();
-            let http = str::from_utf8(&buffer).unwrap();
             let mut idx = 0;
             let method = parse_method(&mut idx, &buffer);
             let url = parse_url(&mut idx, &buffer);

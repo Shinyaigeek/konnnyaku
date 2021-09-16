@@ -16,7 +16,6 @@ impl Client {
     pub fn get(url: String) -> Response {
         let url = Url::new(&Self::validate_url(url));
         let request = Request::build(url.pathname.clone(), RequestMethod::GET, url.host.clone());
-        let host = request.host.clone();
         let request = request.print();
         let mut stream = Client::connect(url);
         let request = request.as_bytes();
