@@ -54,5 +54,4 @@ impl Url {
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum Protocol {
     Http,
-    Https,
 }
