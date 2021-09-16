@@ -11,7 +11,7 @@ pub struct Response {
 impl Response {
     pub fn build() -> Self {
         return Self {
-            version: HTTPVersion::one_one,
+            version: HTTPVersion::HttpOnePointOne,
             status_code: 200,
             body: "".to_string(),
         };
@@ -32,8 +32,8 @@ impl Response {
         idx += 1;
 
         let version = match &version[..] {
-            one_one => HTTPVersion::one_one,
-            one_zero => HTTPVersion::one_zero,
+            "HTTP/1.1" => HTTPVersion::HttpOnePointOne,
+            "HTTP/1.0" => HTTPVersion::HttpOnePointZero,
             _ => panic!(""),
         };
 
@@ -99,12 +99,9 @@ Content-Type: text/html
     }
 }
 
-const one_one: &str = "HTTP/1.1";
-const one_zero: &str = "HTTP/1.0";
-
 enum HTTPVersion {
-    one_one,
-    one_zero,
+    HttpOnePointOne,
+    HttpOnePointZero,
 }
 
 fn match_status(status_code: u32) -> String {
