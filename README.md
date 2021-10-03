@@ -45,6 +45,8 @@ fn main() {
 
 ## RoadMap 🚗
 
+- [x] get resource via HTTP Request
+- [x] serve resource via HTTP Response
 - [ ] HTTP method other than GET
 - [ ] HTTP status message other than 200
 - [ ] HTTP 2
