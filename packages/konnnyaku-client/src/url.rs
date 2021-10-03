@@ -21,7 +21,7 @@ impl Url {
 
         let protocol = match &protocol[..] {
             "http:" => Protocol::Http,
-            // TODO https のサポート
+            "https:" => Protocol::Https,
             _ => panic!("{}", protocol),
         };
 
@@ -54,4 +54,5 @@ impl Url {
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum Protocol {
     Http,
+    Https
 }

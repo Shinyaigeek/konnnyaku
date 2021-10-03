@@ -35,6 +35,7 @@ impl Client {
     fn make_connection_port(url: Url) -> String {
         let port = match url.protocol {
             Protocol::Http => "80",
+            Protocol::Https => "443",
         };
 
         format!("{}:{}", url.host, port)
