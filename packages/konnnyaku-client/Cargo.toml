@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 konnnyaku-common = { path = "../konnnyaku-common" }
+rustls = "0.20.0"
