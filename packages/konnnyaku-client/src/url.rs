@@ -49,10 +49,14 @@ impl Url {
             pathname,
         };
     }
+
+    pub fn is_https(&self) -> bool {
+        self.protocol == Protocol::Https
+    }
 }
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum Protocol {
     Http,
-    Https
+    Https,
 }
