@@ -66,4 +66,10 @@ mod tests {
         let response = Client::get("http://example.com".to_string());
         assert_eq!(response.status_code, 200);
     }
+
+    #[test]
+    fn it_works_with_https_request() {
+        let response = Client::get("https://example.com".to_string());
+        assert_eq!(response.status_code, 200);
+    }
 }
