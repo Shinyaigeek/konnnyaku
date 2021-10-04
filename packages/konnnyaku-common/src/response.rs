@@ -1,5 +1,4 @@
-use std::io::Read;
-use std::net::TcpStream;
+use crate::stream::ApplicationStream;
 use std::str;
 
 pub struct Response {
@@ -17,7 +16,7 @@ impl Response {
         };
     }
 
-    pub fn parse_stream_to_response(stream: &mut TcpStream) -> Self {
+    pub fn parse_stream_to_response(stream: &mut ApplicationStream) -> Self {
         let mut buffer = Vec::new();
         stream.read_to_end(&mut buffer).unwrap();
 

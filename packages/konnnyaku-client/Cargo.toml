@@ -8,4 +8,3 @@ edition = "2018"
 
 [dependencies]
 konnnyaku-common = { path = "../konnnyaku-common" }
-native-tls = "0.2.8"

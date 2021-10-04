@@ -1,12 +1,8 @@
-use crate::tls::TlsConnector;
-use crate::url::{Protocol, Url};
 use konnnyaku_common::request::{Request, RequestMethod};
 use konnnyaku_common::response::Response;
-use std::io::Write;
-use std::net::TcpStream;
-
-mod tls;
-mod url;
+use konnnyaku_common::stream::ApplicationStream;
+use konnnyaku_common::tls::TlsConnector;
+use konnnyaku_common::url::Url;
 
 pub struct Client {
     tls_connector: TlsConnector,
@@ -32,29 +28,8 @@ impl Client {
         response
     }
 
-    fn connect(&self, url: Url) -> TcpStream {
-        // tls
-        let stream = TcpStream::connect(Self::make_connection_port(url));
-
-        let stream = if url.is_https() {
-            self.tls_connector
-                .connection
-                .connect(&Self::make_connection_port(url), stream.unwrap())
-        } else {
-            stream
-        };
-
-        let stream = stream.unwrap();
-        return stream;
-    }
-
-    fn make_connection_port(url: Url) -> String {
-        let port = match url.protocol {
-            Protocol::Http => "80",
-            Protocol::Https => "443",
-        };
-
-        format!("{}:{}", url.host, port)
+    fn connect(&self, url: Url) -> ApplicationStream {
+        ApplicationStream::new(&url, &self.tls_connector)
     }
 
     fn validate_url(url: String) -> String {
