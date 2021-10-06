@@ -14,9 +14,10 @@ impl ApplicationStream {
         let stream = TcpStream::connect(Self::make_connection_port(url));
 
         if url.is_https() {
+            println!("hogeho");
             let tls_stream = tls_connector
                 .connection
-                .connect(&Self::make_connection_port(url), stream.unwrap())
+                .connect(&url.host, stream.unwrap())
                 .unwrap();
             ApplicationStream::TlsStream(tls_stream)
         } else {
