@@ -16,7 +16,7 @@ impl Client {
     }
 
     pub fn get(url: String) -> Response {
-        let url = Url::new(&Self::validate_url(url));
+        let url = Url::new(&url);
         let request = Request::build(url.pathname.clone(), RequestMethod::GET, url.host.clone());
         let request = request.print();
         let client = Client::build();
@@ -30,16 +30,6 @@ impl Client {
 
     fn connect(&self, url: Url) -> ApplicationStream {
         ApplicationStream::new(&url, &self.tls_connector)
-    }
-
-    fn validate_url(url: String) -> String {
-        if url.ends_with("/") {
-            url
-        } else {
-            let mut url = url.clone();
-            url.push('/');
-            url
-        }
     }
 }
 

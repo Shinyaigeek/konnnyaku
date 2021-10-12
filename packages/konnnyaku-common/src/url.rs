@@ -27,7 +27,11 @@ impl Url {
 
         let mut host = String::from("");
 
-        while href_bytes[idx] != b'/' {
+        while href_bytes.len() > idx
+            && href_bytes[idx] != b'/'
+            && href_bytes[idx] != b'?'
+            && href_bytes[idx] != b'#'
+        {
             host.push(href_bytes[idx] as char);
             idx += 1;
         }
@@ -38,6 +42,12 @@ impl Url {
             pathname.push(href_bytes[idx] as char);
             idx += 1;
         }
+
+        let pathname = if pathname.len() == 0 {
+            "/".to_string()
+        } else {
+            pathname
+        };
 
         let origin = format!("{}//{}", "http:", host);
 
