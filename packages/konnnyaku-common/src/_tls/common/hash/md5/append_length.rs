@@ -23,7 +23,7 @@ fn convert_u64_to_u8s(msg_length: u64) -> [u8; 8] {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::_tls::common::crypto::pad::pad;
+    use crate::_tls::common::hash::md5::pad::pad;
     #[test]
     fn it_works() {
         let padded = pad(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
