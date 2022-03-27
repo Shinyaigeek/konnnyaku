@@ -1,6 +1,6 @@
 pub fn pad(message: Vec<u8>) -> Vec<u8> {
     let mut padded_message = message;
-    let pad_length = 448 - (padded_message.len() % 512);
+    let pad_length = (448 - (padded_message.len() * 8 % 512)) / 8;
     if pad_length <= 0 {
         return padded_message;
     }
@@ -13,8 +13,13 @@ pub fn pad(message: Vec<u8>) -> Vec<u8> {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     #[test]
     fn it_works() {
-        assert_eq!(2 + 2, 5);
+        let padded = pad(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        assert_eq!((padded.len() * 8) % 512, 448);
+        assert_eq!(padded[0..10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        assert_eq!(padded[10..11], [1]);
+        assert_eq!(padded[11..padded.len()], [0; 45]);
     }
 }

@@ -1,6 +1,4 @@
-pub fn md5() {
-
-}
+pub fn md5() {}
 
 #[cfg(test)]
 mod tests {
