@@ -4,9 +4,10 @@ pub fn pad(message: Vec<u8>) -> Vec<u8> {
     if pad_length <= 0 {
         return padded_message;
     }
-    padded_message.push(1);
+    // the first bit is 1
+    padded_message.push(0b10000000);
     for _ in 1..pad_length {
-        padded_message.push(0);
+        padded_message.push(0_u8);
     }
     return padded_message;
 }

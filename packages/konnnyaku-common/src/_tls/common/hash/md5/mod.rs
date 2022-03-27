@@ -10,9 +10,11 @@ use std::mem;
 use utils::{f, g, getT, h, i};
 
 pub fn md5(message: Vec<u8>) -> [u8; 16] {
-    let message_length = message.len();
+    let message = message;
+    let message_length = message.len() * 8;
     let message = pad(message);
     let mut message = append_length(message, message_length as u64);
+
     let (mut a, mut b, mut c, mut d) = init_md_buffer();
     let t = getT();
 
