@@ -45,7 +45,6 @@ pub fn md5(message: Vec<u8>) -> [u8; 16] {
 
         macro_rules! op1 {
             ($a:ident,$b:ident,$c:ident,$d:ident,$k:expr,$s:expr,$i:expr) => {
-                println!("x: {:?}", x[$k]);
                 $a = $b.wrapping_add(
                     ($a.wrapping_add(f($b, $c, $d))
                         .wrapping_add(x[$k].into())
