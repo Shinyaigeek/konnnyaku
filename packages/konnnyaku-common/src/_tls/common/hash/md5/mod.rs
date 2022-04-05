@@ -39,8 +39,6 @@ pub fn md5(message: Vec<u8>) -> [u8; 16] {
 
         let block = &message[x..(x + 16)];
         let x = block;
-        println!("{:?}", x);
-
 
 
         macro_rules! op1 {
@@ -189,26 +187,28 @@ pub fn md5(message: Vec<u8>) -> [u8; 16] {
         d.swap_bytes(),
     );
 
-    println!("iii: {:?}, {:?}, {:?}, {:?}", a, b, c, d);
-
     [
-        a as u8,
-        (a >> 8) as u8,
-        (a >> 16) as u8,
         (a >> 24) as u8,
-        b as u8,
-        (b >> 8) as u8,
-        (b >> 16) as u8,
+        (a >> 16) as u8,
+        (a >> 8) as u8,
+        a as u8,
         (b >> 24) as u8,
-        c as u8,
-        (c >> 8) as u8,
-        (c >> 16) as u8,
+        (b >> 16) as u8,
+        (b >> 8) as u8,
+        b as u8,
         (c >> 24) as u8,
-        d as u8,
-        (d >> 8) as u8,
-        (d >> 16) as u8,
+        (c >> 16) as u8,
+        (c >> 8) as u8,
+        c as u8,
         (d >> 24) as u8,
+        (d >> 16) as u8,
+        (d >> 8) as u8,
+        d as u8,
     ]
+}
+
+pub fn to_hex(bytes: [u8; 16]) -> String {
+    bytes.iter().map(|n| format!("{:02x}", n)).collect::<String>()
 }
 
 #[cfg(test)]
@@ -219,6 +219,6 @@ mod test {
     fn it_works() {
         let message = "abc".as_bytes();
         let result = md5(message.into());
-        assert_eq!(result, "900150983cd24fb0d6963f7d28e17f72".as_bytes());
+        assert_eq!(to_hex(result), "900150983cd24fb0d6963f7d28e17f72");
     }
 }
