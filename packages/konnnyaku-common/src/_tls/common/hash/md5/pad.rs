@@ -20,7 +20,7 @@ mod tests {
         let padded = pad(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
         assert_eq!((padded.len() * 8) % 512, 448);
         assert_eq!(padded[0..10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-        assert_eq!(padded[10..11], [1]);
+        assert_eq!(padded[10..11], [0b10000000]);
         assert_eq!(padded[11..padded.len()], [0; 45]);
     }
 }

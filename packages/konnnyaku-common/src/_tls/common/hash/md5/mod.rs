@@ -6,34 +6,46 @@ mod utils;
 use append_length::append_length;
 use init_md_buffer::init_md_buffer;
 use pad::pad;
-use std::mem;
 use utils::{f, g, getT, h, i};
 
 pub fn md5(message: Vec<u8>) -> [u8; 16] {
     let message = message;
     let message_length = message.len() * 8;
     let message = pad(message);
-    let mut message = append_length(message, message_length as u64);
+    let message = append_length(message, message_length as u64);
+
+    let mut message_u32 = vec![] as Vec<u32>;
+
+    // read bytes with little-eindian
+    for x in 0..(message.len() / (32 / 8)) {
+        message_u32.push(
+            ((message[x * 4 + 3] as u32) << 24)
+                | ((message[x * 4 + 2] as u32) << 16)
+                | ((message[x * 4 + 1] as u32) << 8)
+                | (message[x * 4 + 0] as u32),
+        );
+    }
+
+    let message = message_u32;
+
 
     let (mut a, mut b, mut c, mut d) = init_md_buffer();
     let t = getT();
-
-    println!("message: {:?}", message.len());
-
-    for mut block in message.chunks_exact_mut(64) {
+    for x in 0..(message.len() / 16) {
         let aa = a;
         let bb = b;
         let cc = c;
         let dd = d;
 
-        let mut x = unsafe { mem::transmute::<&mut [u8], &mut [u32]>(&mut block) };
-        #[cfg(target_endian = "big")]
-        for j in 0..16 {
-            x[j] = x[j].swap_bytes();
-        }
+        let block = &message[x..(x + 16)];
+        let x = block;
+        println!("{:?}", x);
+
+
 
         macro_rules! op1 {
             ($a:ident,$b:ident,$c:ident,$d:ident,$k:expr,$s:expr,$i:expr) => {
+                println!("x: {:?}", x[$k]);
                 $a = $b.wrapping_add(
                     ($a.wrapping_add(f($b, $c, $d))
                         .wrapping_add(x[$k].into())
