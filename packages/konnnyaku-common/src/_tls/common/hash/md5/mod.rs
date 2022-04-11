@@ -28,7 +28,6 @@ pub fn md5(message: Vec<u8>) -> [u8; 16] {
 
     let message = message_u32;
 
-
     let (mut a, mut b, mut c, mut d) = init_md_buffer();
     let t = getT();
     for x in 0..(message.len() / 16) {
@@ -39,7 +38,6 @@ pub fn md5(message: Vec<u8>) -> [u8; 16] {
 
         let block = &message[x..(x + 16)];
         let x = block;
-
 
         macro_rules! op1 {
             ($a:ident,$b:ident,$c:ident,$d:ident,$k:expr,$s:expr,$i:expr) => {
@@ -208,7 +206,10 @@ pub fn md5(message: Vec<u8>) -> [u8; 16] {
 }
 
 pub fn to_hex(bytes: [u8; 16]) -> String {
-    bytes.iter().map(|n| format!("{:02x}", n)).collect::<String>()
+    bytes
+        .iter()
+        .map(|n| format!("{:02x}", n))
+        .collect::<String>()
 }
 
 #[cfg(test)]

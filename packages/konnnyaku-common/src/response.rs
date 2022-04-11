@@ -4,7 +4,7 @@ use std::str;
 pub struct Response {
     pub version: HTTPVersion,
     pub status_code: u32,
-    pub body: String,
+    pub body: Vec<u8>,
 }
 
 impl Response {
@@ -12,7 +12,7 @@ impl Response {
         return Self {
             version: HTTPVersion::HttpOnePointOne,
             status_code: 200,
-            body: "".to_string(),
+            body: vec![],
         };
     }
 
@@ -70,11 +70,12 @@ impl Response {
         return Response {
             version,
             status_code,
-            body: str::from_utf8(&buffer[idx..]).unwrap().to_string(),
+            body: buffer,
         };
     }
 
     pub fn print(&self) -> String {
+        let body = bytes_to_str(self.body.clone());
         String::from(format!(
             "HTTP/1.1 200 OK
 Date: Sun, 10 Oct 2010 23:26:07 GMT
@@ -88,14 +89,18 @@ Content-Type: text/html
 
 {}
 ",
-            self.body.len(),
-            self.body
+            body.len(),
+            body
         ))
     }
 
     pub fn write(&mut self, body: &str) {
-        self.body.push_str(body);
+        self.body.append(&mut body.to_string().as_bytes().to_vec());
     }
+}
+
+fn bytes_to_str(bytes: Vec<u8>) -> String {
+    str::from_utf8(&bytes).unwrap().to_string()
 }
 
 pub enum HTTPVersion {
