@@ -36,7 +36,6 @@ use konnnyaku_client::Client;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
-    //* url
     let input = &args[1];
     Client::get(input.to_string());
 }
