@@ -70,7 +70,7 @@ impl Response {
         return Response {
             version,
             status_code,
-            body: buffer,
+            body: buffer[idx..].to_vec(),
         };
     }
 
